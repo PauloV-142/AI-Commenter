@@ -58,19 +58,25 @@ header {
     padding-bottom: 2rem;
     height: fit-content;
 }
-.comment-section {
+#comment_section {
+    display: flex;
+    justify-content: space-between;
     min-height: 100%;
-    display: grid;
+    flex-wrap: wrap;
 }
 .comment {
     background-color: var(--gray0);
-    width: 50%;
+    width: 49%;
+    height: fit-content;
     padding: 1rem;
+    margin-bottom: 1rem;
 }
 .comment .text {
     color: var(--white);
-    /* overflow: scroll; */
     overflow-wrap: break-word;
+    overflow-y: scroll;
+    max-height: 25rem;
+    white-space-collapse: preserve;
 }
 
 .title {
