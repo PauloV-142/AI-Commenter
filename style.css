@@ -46,6 +46,7 @@ header {
 }
 #user_input {
     background-color: var(--cyanide-blue0);
+    color: var(--white);
     border: none;
     width: 100%;
     min-height: 15rem;
