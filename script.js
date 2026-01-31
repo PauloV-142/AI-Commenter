@@ -1,82 +1,81 @@
 const comment_section = document.getElementById("comment_section");
 const user_text = document.getElementById("user_input");
-let commentCounter = 1;
-let addedComments = [];
+const writing_frequency_counter = document.getElementById("writing_frequency_counter");
+
+let comments = [];
 
 /*Comment adding mechanincs...*/
 function Comment(username, text) {
+    if (! username || ! text) return;
     function renderComment(data) {
-        return `<div class="comment" id="${data.id}">
+        let id = comments.length
+        return `<div class="comment" id="${id}">
         <span class="username">${data.username}</span>
-        <span id="comment_id">#${data.id}</span>
+        <span id="comment_id">#${id}</span>
         <hr class="comment-sectioner">
         <p class="text">${data.text}</p>
         </div>`;
     }
-    comment_section.innerHTML += renderComment(this);
     
     this.username = username;
     this.text = text;
-    this.id = ++commentCounter;
     
-    addedComments[this.id] = this;
-    // Notify
-    console.log(addedComments)
+    comment_section.innerHTML += renderComment(this);
+    comments[comments.length] = this;
+    // Notify: "New comment..."
+    console.log(comments)
     return this
 }
-function UserComment() {
-    username = window.prompt(`#${commentCounter} Apelido:`)
-    text = window.prompt(`Comentário:`)
-    return new Comment(username, text)
-}
 
-user_text.onclick = function() {
-    new UserComment()
+// You can add comments using the console >_ new Comment("username", "text")
+
+user_text.oninput = function () {
+    writing.frequency += 1
 }
 
 /*Adding comments dinamically*/
-
 function chooseRandomTimeout(min, max) {
-    return Math.trunc(min + (Math.random() * max))
+    let difference = max - min;
+    let timeout = Math.trunc(min + (Math.random() * difference));
+    console.log("Timeout started: ", timeout);
+    return timeout
 }
 
-let flowData = {
-    timeoutId: null,
-    writingFrequency: 0,
-    writingFrequencyThreshold: 10,
-    number: 0,
-    get isEnoughText () {
-        return flowData.writingFrequency >= flowData.writingFrequencyThreshold;
-    }
-    
+let writing = {
+    freq: 0,
+    threshold: 40, // The minimal value for generating a next comment.
+    isEnoughText: false,
+    get frequency () {return this.freq},
+    set frequency (value) {
+        // Update frequency.
+        this.freq = value;
+        writing_frequency_counter.textContent = this.frequency;
+        
+        // Monitor if threshold has been reached
+        if (this.isEnoughText) return;
+        let thresholdReached = this.frequency >= this.threshold;
+        if (thresholdReached) {
+            console.log(`Threshold ${this.threshold} reached.`);
+            this.isEnoughText = true;
+        }
+    },  
 };
-function flow() {
-    flowData.timeoutId = setTimeout(() => {
-        handleFlowRestarting(flowData.isEnoughText);
-        flowData.number += 1;
-        console.log("Starting new Flow:", flowData.number);
-    }, chooseRandomTimeout(30_000, 120_000));
-}
 
-function handleFlowRestarting(isEnoughText) {
-    if (isEnoughText) {
-        window.alert("Adding new comment");
-        // Add new comment
-    } else {
-        flow();
+function generateComments() {
+    console.log("Starting comment generation")
+    function restart(isEnoughText) {
+        if (isEnoughText) {
+            new Comment("Gut", `There's enough text: ${writing.frequency}`);
+            writing.frequency = 0;
+        } else {
+            console.log("There isn't enough text: ", writing.frequency);
+        }
+        generateComments();
     }
 
+    setTimeout(() => {
+        restart(writing.isEnoughText);
+    }, chooseRandomTimeout(10_000, 12_000));
 }
 
-// Let flow be a function, that calls the timeout at the end
-
-// 1. The user writes something.
-user_text.onchange = function handleTextareaUpdates() {
-    if (flowData.ongoing) {
-        flowData.writingFrequency += 1;
-    } else {
-        flowData.start()
-    }
-};
-// Temporary, com 
-var exampleComments = [];
+generateComments();

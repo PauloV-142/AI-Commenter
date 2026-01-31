@@ -83,7 +83,7 @@ header {
 .title {
     font-size: 2em;
 }
-span.username {
+.username {
     font-size: 1.2rem;
     overflow-wrap: break-word;
 }
