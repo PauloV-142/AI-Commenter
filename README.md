@@ -3,8 +3,8 @@ Worst Comments is a static website (localhost) that will let the user write anyt
 ---
 
 ### DONE LIST:
-- [DONE!] ~Add comments dinamically~ 
-- [DONE!] ~Listen to textarea activity and set a threshold to add a new comment.~ 
+- [x] 1 ~Add comments dinamically~ 
+- [x] 2. ~Listen to textarea activity and set a threshold to add a new comment.~ 
     - Add a screen warning in place of the AI call. (for now)
     - Variable timeout min-max - After this, check if the onchange trigger let call AI
     - Define when to trigger, related to the frequency of onchange event.
@@ -21,7 +21,7 @@ Worst Comments is a static website (localhost) that will let the user write anyt
         - Keep the *frequency of change* variable for the next flow. (As an optional parameter for a function).
     6. Return to the :FLOW: start.
 
-3. Align the comment section to 2xN, vertical good-looking flex.
+- [ ] 3. Align the comment section to 2xN, vertical good-looking flex.
     - Add the newest comments to the start of the list
 
 ## Finish the first version: 7 days starting from 29/1/2026
