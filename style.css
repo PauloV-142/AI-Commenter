@@ -30,6 +30,8 @@
 main {
     height: 100dvh;
     color: var(--white);
+    display: grid;
+    grid-template-rows: auto auto 1fr;
 }
 
 header {
@@ -54,15 +56,17 @@ header {
 
 .comment-section-wrapper {
     background-color: var(--gray2);
+    padding-bottom: 2rem;
     max-width: 80rem;
     min-height: 10rem;
-    padding-bottom: 2rem;
-    height: fit-content;
+    height: 40rem;
+    display: grid;
+    grid-template-rows: auto 1fr; /*Doing THIS GRID, THEN FLEXBOX*/
 }
 #comment_section {
     display: flex;
-    justify-content: space-between;
-    min-height: 100%;
+    align-items: flex-end;
+    flex-direction: column-reverse;
     flex-wrap: wrap;
 }
 .comment {
